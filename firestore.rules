@@ -1,0 +1,15 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow client read/write access only to the app's user collection.
+    // This app manages its own authentication on the client side.
+    match /combatcats_users/{userId} {
+      allow read, write: if true;
+    }
+
+    // Deny everything else.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
